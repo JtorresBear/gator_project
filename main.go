@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -21,14 +20,13 @@ func main() {
 		cmdMap: make(map[string]func(*state, command) error),
 	}
 	cmds.register("login", handlerLogin)
-	fmt.Println(cmds.cmdMap)
 
 	userInputs := os.Args
 	if len(userInputs) < 2 {
 		log.Fatal("too few user inputs")
 	}
-	handlerName := userInputs[0]
-	handlerArgs := userInputs[1:]
+	handlerName := userInputs[1]
+	handlerArgs := userInputs[2:]
 	cmdHandle := command{
 		name:      handlerName,
 		arguments: handlerArgs,
