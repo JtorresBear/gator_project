@@ -1,10 +1,13 @@
 package main
 
 import (
+	"database/sql"
 	"log"
 	"os"
 
 	"github.com/JtorresBear/gator_project/internal/config"
+	"github.com/JtorresBear/gator_project/internal/database"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -12,14 +15,18 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	db, err := sql.Open("postgres", cfg.Database)
+	dbQueries := database.New(db)
 	st8 := state{
 		cfg: &cfg,
+		db:  dbQueries,
 	}
 
 	cmds := commands{
 		cmdMap: make(map[string]func(*state, command) error),
 	}
-	cmds.register("login", handlerLogin)
+
+	fillCommands(&cmds)
 
 	userInputs := os.Args
 	if len(userInputs) < 2 {
@@ -36,4 +43,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func fillCommands(c *commands) {
+	c.register("login", handlerLogin)
+	c.register("register", handlerRegister)
+	c.register("reset", handlerReset)
+	c.register("users", handlerUsers)
 }
