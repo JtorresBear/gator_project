@@ -12,10 +12,10 @@ func handlerUsers(s *state, cmd command) error {
 	}
 
 	for _, user := range users {
-		if user.Name.String == s.cfg.Current_user_name {
-			fmt.Printf("* %v (current)\n", user.Name.String)
+		if user.Name == s.cfg.Current_user_name {
+			fmt.Printf("* %v (current)\n", user.Name)
 		} else {
-			fmt.Printf("* %v \n", user.Name.String)
+			fmt.Printf("* %v \n", user.Name)
 		}
 	}
 

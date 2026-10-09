@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"errors"
 	"fmt"
 	"log"
@@ -22,10 +21,8 @@ func handlerRegister(s *state, cmd command) error {
 	time := time.Now()
 	new_user.CreatedAt = time
 	new_user.UpdatedAt = time
-	new_user.Name = sql.NullString{
-		String: cmd.arguments[0],
-		Valid:  true,
-	}
+	new_user.Name = cmd.arguments[0]
+
 	user, err := s.db.CreateUser(context.Background(), new_user)
 
 	pqErr := new(pq.Error)
@@ -37,7 +34,10 @@ func handlerRegister(s *state, cmd command) error {
 	if err != nil {
 		return err
 	}
-	s.cfg.SetUser(user.Name.String)
+	err = s.cfg.SetUser(user.Name)
+	if err != nil {
+		return err
+	}
 	fmt.Println("User was Created")
 	log.Println("User ID: ", user.ID)
 	log.Println("Created at: ", user.CreatedAt)
