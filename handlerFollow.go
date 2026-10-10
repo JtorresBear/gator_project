@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func handlerFollow(s *state, cmd command) error {
+func handlerFollow(s *state, cmd command, user database.User) error {
 	if len(cmd.arguments) != 1 {
 		return errors.New("Need One url argument")
 	}
@@ -18,10 +18,7 @@ func handlerFollow(s *state, cmd command) error {
 	if err != nil {
 		return err
 	}
-	user, err := s.db.GetUser(context.Background(), s.cfg.Current_user_name)
-	if err != nil {
-		return err
-	}
+
 	followParams := database.CreateFeedFollowParams{}
 	followParams.ID = uuid.New()
 	timeN := time.Now()

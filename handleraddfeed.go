@@ -11,14 +11,11 @@ import (
 	"github.com/JtorresBear/gator_project/internal/database"
 )
 
-func handlerAddFeed(s *state, cmd command) error {
+func handlerAddFeed(s *state, cmd command, user database.User) error {
 	if len(cmd.arguments) < 2 {
 		return errors.New("You need a name and url")
 	}
-	user, err := s.db.GetUser(context.Background(), s.cfg.Current_user_name)
-	if err != nil {
-		return err
-	}
+
 	feedParams := database.CreateFeedParams{}
 	feedParams.ID = uuid.New()
 	timeF := time.Now()

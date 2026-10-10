@@ -51,8 +51,9 @@ func fillCommands(c *commands) {
 	c.register("reset", handlerReset)
 	c.register("users", handlerUsers)
 	c.register("agg", handlerAgg)
-	c.register("addfeed", handlerAddFeed)
+	c.register("addfeed", middlewareLoggedIn(handlerAddFeed))
 	c.register("feeds", handlerFeeds)
-	c.register("follow", handlerFollow)
+	c.register("follow", middlewareLoggedIn(handlerFollow))
 	c.register("following", handlerFollowing)
+	c.register("unfollow", middlewareLoggedIn(handlerUnfollow))
 }
