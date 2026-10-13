@@ -12,6 +12,8 @@ func handlerReset(s *state, cmd command) error {
 		log.Fatalf("There was an err: %v", err)
 		return err
 	}
+	err = s.db.Reset_Posts(context.Background())
 	fmt.Println("users were reset")
+	fmt.Println("Posts were also reset")
 	return nil
 }
