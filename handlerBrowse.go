@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 
@@ -18,6 +19,9 @@ func handlerBrowse(s *state, cmd command, user database.User) error {
 		}
 	}
 	params := database.Get_Posts_for_UserParams{}
+	if limit < 1 {
+		return errors.New("You need at least 1.")
+	}
 	params.Limit = int32(limit)
 	params.UserID = user.ID
 	posts, err := s.db.Get_Posts_for_User(context.Background(), params)
@@ -26,7 +30,11 @@ func handlerBrowse(s *state, cmd command, user database.User) error {
 	}
 
 	for _, post := range posts {
-		fmt.Println(post)
+		fmt.Println()
+		fmt.Println(post.Title.String)
+		fmt.Println()
+		fmt.Println(post.Description.String)
+		fmt.Println()
 	}
 	return nil
 }
