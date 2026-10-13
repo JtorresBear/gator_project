@@ -29,6 +29,10 @@ func handlerBrowse(s *state, cmd command, user database.User) error {
 		return err
 	}
 
+	if len(posts) == 0 {
+		fmt.Println("No posts found")
+		return nil
+	}
 	for _, post := range posts {
 		fmt.Println()
 		fmt.Println(post.Title.String)
