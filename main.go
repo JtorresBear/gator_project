@@ -56,4 +56,5 @@ func fillCommands(c *commands) {
 	c.register("follow", middlewareLoggedIn(handlerFollow))
 	c.register("following", handlerFollowing)
 	c.register("unfollow", middlewareLoggedIn(handlerUnfollow))
+	c.register("browse", middlewareLoggedIn(handlerBrowse))
 }
