@@ -1,5 +1,6 @@
-# gator_project
-It is a blog aggregator. 
+# Gator CLI
+
+
 ## Overview
 
 Gator is an RSS feed aggregator that works with websites offering RSS feeds. It retrieves data through HTTP requests and parses the XML responses, allowing users to view articles from the blogs and websites they follow in one place.
@@ -16,14 +17,20 @@ Users can follow multiple feeds and browse their latest posts directly from the 
 
 ## Prerequisites
 
-Before installing and running Gator, make sure you have the following installed:
+Before installing and running Gator, make sure you have:
 
-- [Go](https://go.dev/doc/install) — Required to compile and install the Gator CLI.
+- [Go](https://go.dev/doc/install) (version 1.27.1 or newer) — Required to compile and install Gator.
 - [PostgreSQL](https://www.postgresql.org/download/) — Required to store users, feeds, and posts.
-- [Git](https://git-scm.com/install/) — Required if cloning the repository.
-- [Goose](https://github.com/pressly/goose) — Used to run database migrations and create the required tables.
+- [Git](https://git-scm.com/install/) — Required to clone the repository for database setup.
+- [Goose](https://github.com/pressly/goose) — Required to apply database migrations.
 
-Make sure PostgreSQL is running and that you have a database created for Gator.
+To install Goose using Go:
+
+```bash
+go install github.com/pressly/goose/v3/cmd/goose@latest
+```
+
+Make sure your Go binary directory (typically `~/go/bin`) is included in your system's `PATH`.
 
 ## Installation
 
@@ -36,8 +43,6 @@ go install github.com/JtorresBear/gator_project/cmd/gator@latest
 ```
 
 This downloads, compiles, and installs Gator.
-
-Make sure Go's binary directory (typically `~/go/bin`) is included in your system's `PATH`.
 
 ### 2. Set Up PostgreSQL
 
@@ -124,7 +129,7 @@ Gator provides several commands for managing users, RSS feeds, and posts.
 | `gator unfollow <url>` | Unfollow a feed. |
 | `gator agg <duration>` | Periodically fetch and save RSS posts. |
 | `gator browse [limit]` | Display the latest posts from followed feeds. Defaults to 2 posts. |
-| `gator reset` | Delete registered users and associated data. |
+| `gator reset` | Delete all registered users and their associated data. **Warning: This is destructive and cannot be undone.** |
 
 ### Example Usage
 
@@ -172,4 +177,4 @@ The `agg` command continues running until stopped with `Ctrl + C`.
 - **Goose:** Managing database migrations.
 - **sqlc:** Generating type-safe Go code from SQL queries.
 - **HTTP & XML:** Retrieving RSS feeds and parsing XML into Go structs.
-- **Data Persistence:** Storing and retrieving application data across sessions.
+- **Data Persistence:** Storing and retrieving application data across sessions.   
